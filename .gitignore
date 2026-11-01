@@ -1,0 +1,4 @@
+node_modules/
+*.vsix
+test-results/
+.DS_Store

@@ -1,0 +1,210 @@
+{
+  "name": "brain-gym",
+  "displayName": "thinkmaxx",
+  "description": "Quick puzzles and reply alerts for Codex and Claude Code in VS Code.",
+  "version": "0.9.3",
+  "publisher": "braingym-local",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./src/extension.cjs",
+  "extensionKind": [
+    "workspace"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onWebviewPanel:brainGym"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "Puzzles work in restricted folders; terminal setup needs workspace trust."
+    },
+    "virtualWorkspaces": false
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "thinkmaxx.startCodex",
+        "title": "thinkmaxx: Start Codex"
+      },
+      {
+        "command": "thinkmaxx.startClaude",
+        "title": "thinkmaxx: Start Claude Code"
+      },
+      {
+        "command": "thinkmaxx.resumeCodex",
+        "title": "thinkmaxx: Resume Codex"
+      },
+      {
+        "command": "thinkmaxx.resumeClaude",
+        "title": "thinkmaxx: Resume Claude Code"
+      },
+      {
+        "command": "thinkmaxx.preview",
+        "title": "thinkmaxx: Play a Puzzle"
+      },
+      {
+        "command": "thinkmaxx.toggle",
+        "title": "thinkmaxx: Toggle Auto Puzzles"
+      },
+      {
+        "command": "thinkmaxx.removeHooks",
+        "title": "thinkmaxx: Disconnect This Project"
+      },
+      {
+        "command": "thinkmaxx.settings",
+        "title": "thinkmaxx: Settings"
+      },
+      {
+        "command": "thinkmaxx.connectAlerts",
+        "title": "thinkmaxx: Connect All Terminals"
+      },
+      {
+        "command": "thinkmaxx.returnToChat",
+        "title": "thinkmaxx: Return to Chat"
+      },
+      {
+        "command": "thinkmaxx.removeUserHooks",
+        "title": "thinkmaxx: Disconnect Account Alerts"
+      },
+      {
+        "command": "thinkmaxx.makeRoom",
+        "title": "thinkmaxx: Toggle Focus Mode"
+      }
+    ],
+    "configuration": {
+      "title": "thinkmaxx",
+      "properties": {
+        "thinkmaxx.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Open puzzles automatically when an assistant terminal is active."
+        },
+        "thinkmaxx.topic": {
+          "type": "string",
+          "enum": [
+            "mix",
+            "lights",
+            "cube",
+            "river",
+            "tracks",
+            "sums",
+            "symbols",
+            "rotation"
+          ],
+          "enumDescriptions": [
+            "Shuffle",
+            "Lights",
+            "Lights 3D",
+            "AI River",
+            "Robot Tracks",
+            "Sum Grid",
+            "Symbol Grid",
+            "Mental Rotation"
+          ],
+          "default": "mix",
+          "description": "Choose a puzzle or shuffle through them."
+        },
+        "thinkmaxx.difficulty": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max",
+            "ultracode"
+          ],
+          "default": "low",
+          "description": "Choose puzzle difficulty.",
+          "enumItemLabels": [
+            "low",
+            "medium",
+            "high",
+            "Xhigh",
+            "max",
+            "ultracode"
+          ],
+          "enumDescriptions": [
+            "Low.",
+            "Medium.",
+            "High.",
+            "Extra high.",
+            "Maximum.",
+            "Most demanding."
+          ]
+        },
+        "thinkmaxx.showDelayMs": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10000,
+          "default": 1200,
+          "description": "Wait before opening a puzzle after terminal activity."
+        },
+        "thinkmaxx.staleAfterMinutes": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 120,
+          "default": 30,
+          "description": "Clear inactive terminal sessions after this long."
+        },
+        "thinkmaxx.codexPath": {
+          "type": "string",
+          "default": "codex",
+          "description": "Codex CLI command or absolute path.",
+          "scope": "machine"
+        },
+        "thinkmaxx.claudePath": {
+          "type": "string",
+          "default": "claude",
+          "description": "Claude Code command or absolute path.",
+          "scope": "machine"
+        },
+        "thinkmaxx.nodePath": {
+          "type": "string",
+          "default": "",
+          "description": "Optional Node.js path. Defaults to VS Code's runtime.",
+          "scope": "machine"
+        },
+        "thinkmaxx.autoConnectAlerts": {
+          "type": "boolean",
+          "default": true,
+          "description": "Set up activity hooks automatically in trusted projects."
+        },
+        "thinkmaxx.notifications": {
+          "type": "boolean",
+          "default": true,
+          "description": "Notify when a reply finishes, fails, is interrupted, or needs your input."
+        },
+        "thinkmaxx.makeRoomWhileWorking": {
+          "type": "boolean",
+          "default": true,
+          "description": "Open the puzzle after you submit a prompt."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "test": "node --test",
+    "package": "python3 scripts/package.py",
+    "check": "node --check src/extension.cjs && node --check src/settings.cjs && node --check media/app.js && node --check media/puzzles.js && node --check media/track-drag.js && node --check media/quizzes.js && node --check media/rotation-view.js"
+  },
+  "icon": "media/icon.png",
+  "keywords": [
+    "thinkmaxx",
+    "puzzles",
+    "codex",
+    "claude",
+    "thinking"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vilstr17/thinkmax-vscode.git"
+  },
+  "homepage": "https://thinkmaxx-site-deploy.vercel.app"
+}
